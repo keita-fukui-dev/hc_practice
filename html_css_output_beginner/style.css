@@ -24,7 +24,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 4%;
+  padding-block: 10px;
 }
 
 .site-title {
@@ -95,22 +95,22 @@ a {
   border-radius: 50%;
 }
 
-.works-list {
+.profile-list {
   display: flex;
   gap: 18px;
 }
 
-.work-item {
+.profile-item {
   width: calc((100% - 36px) / 3);
   text-align: center;
 }
 
-.work-item h3 {
+.profile-item h3 {
   margin: 0 0 10px;
   font-size: 1rem;
 }
 
-.work-item p {
+.profile-item p {
   margin: 0 0 10px;
   font-size: .85rem;
 }
@@ -122,7 +122,7 @@ a {
   }
 
   .about-content,
-  .works-list {
+  .profile-list {
     flex-direction: column;
   }
 
@@ -143,11 +143,11 @@ a {
     text-align: center;
   }
 
-  .works-list {
+  .profile-list {
     gap: 30px;
   }
 
-  .work-item {
+  .profile-item {
     width: 100%;
   }
 }
