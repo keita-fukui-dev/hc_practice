@@ -1,6 +1,6 @@
 "use strict";
 
-const args = process.argv.slice(2);
+const args = process.argv.slice(2); // argvは引数の配列。[0]はNode.js本体、[1]はこのスクリプトの絶対パス、[2]以降が指定した引数なので、slice(2)で取り出す。
 
 const now = new Date();
 const year = now.getFullYear();
@@ -11,11 +11,11 @@ if (mIndex !== -1) {
   const value = args[mIndex + 1];
   const parsed = Number(value);
 
-  if (!value || Number.isNaN(parsed) || parsed < 1 || parsed > 12) {
+  if (!value || !Number.isInteger(parsed) || parsed < 1 || parsed > 12) {
     process.stderr.write(
-      `エラー: -m の引数が不正です(1~12の数値を指定してください)。指定値: "${value}"\n`,
+      `エラー: -m の引数が不正です(1~12の数値を指定してください)。指定値: "${value}"\n`, // 改行のため\nを使用。console.errorなら予め組み込まれているため不要だが、全体の統一感を考慮してprocess.stderr.writeを採用。
     );
-    process.exit(1);
+    process.exit(1); // exitの戻り値：0は成功、1はエラー。シェルへ状態を通知する。
   }
   month = parsed;
 }
@@ -40,7 +40,7 @@ for (let i = 0; i < startWeekday; i++) {
 
 for (let i = new Date(firstDay); i <= lastDay; i.setDate(i.getDate() + 1)) {
   const dayText = String(i.getDate()).padStart(2, " ");
-  process.stdout.write(`${dayText} `);
+  process.stdout.write(`${dayText} `); // console.log ではないので、改行されずに横に数字が並んでいく
   if (i.getDay() === 6) {
     process.stdout.write(`\n`);
   }
