@@ -62,8 +62,8 @@ title {label: "Twitter ER Diagram"}
 [notifications]
   *id {label: "bigint, not null"}
   user_id {label: "bigint, not null, FK(users)"}
-  like_id {label: "bigint, null, uniq, FK(likes)"}
-  follow_id {label: "bigint, null, uniq, FK(follows)"}
+  like_id {label: "bigint, null, uniq, FK(likes), on delete cascade"}
+  follow_id {label: "bigint, null, uniq, FK(follows), on delete cascade"}
   read_at {label: "datetime, null"}
   created_at {label: "datetime, not null"}
   updated_at {label: "datetime, not null"}
