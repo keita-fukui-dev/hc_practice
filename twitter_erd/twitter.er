@@ -2,9 +2,9 @@ title {label: "Twitter ER Diagram"}
 
 [users]
   *id {label: "bigint, not null"}
-  email {label: "varchar, not null, uniq"}
+  email {label: "varchar, null, uniq, check(email or phone_number not null)"}
   user_name {label: "varchar, not null, uniq"}
-  phone_number {label: "varchar, null, uniq"}
+  phone_number {label: "varchar, null, uniq, check(email or phone_number not null)"}
   password_digest {label: "varchar, not null"}
   display_name {label: "varchar, null"}
   bio {label: "varchar, null"}
