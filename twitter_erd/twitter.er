@@ -3,7 +3,7 @@ title {label: "Twitter ER Diagram"}
 [users]
   *id {label: "bigint, not null"}
   email {label: "varchar, not null, uniq"}
-  user_name {label: "varchar, null, uniq"}
+  user_name {label: "varchar, not null, uniq"}
   phone_number {label: "varchar, null, uniq"}
   password_digest {label: "varchar, not null"}
   display_name {label: "varchar, null"}
