@@ -1,74 +1,74 @@
-title {label: "Twitter ER Diagram"}
+title {label: "Twitter ER Diagram（表記: 物理名 [論理名 / 型, 制約]）"}
 
-[users]
-  *id {label: "bigint, not null"}
-  email_ciphertext {label: "varchar, null"}
-  email_bidx {label: "varchar, null, uniq, check(email_bidx is not null or phone_number_bidx is not null)"}
-  user_name {label: "varchar, not null, uniq"}
-  phone_number_ciphertext {label: "varchar, null"}
-  phone_number_bidx {label: "varchar, null, uniq, check(email_bidx is not null or phone_number_bidx is not null)"}
-  password_digest {label: "varchar, not null"}
-  display_name {label: "varchar, null"}
-  bio {label: "varchar, null"}
-  location {label: "varchar, null"}
-  website {label: "varchar, null"}
-  birth_date {label: "date, null"}
-  profile_image_url {label: "varchar, null"}
-  avatar_image_url {label: "varchar, null"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[users] {label: "ユーザー"}
+  *id {label: "ID / bigint, not null"}
+  email_ciphertext {label: "メールアドレス(暗号化) / varchar, null"}
+  email_bidx {label: "メールアドレス(検索用) / varchar, null, uniq, check(email_bidx is not null or phone_number_bidx is not null)"}
+  user_name {label: "ユーザー名 / varchar, not null, uniq"}
+  phone_number_ciphertext {label: "電話番号(暗号化) / varchar, null"}
+  phone_number_bidx {label: "電話番号(検索用) / varchar, null, uniq, check(email_bidx is not null or phone_number_bidx is not null)"}
+  password_digest {label: "パスワード(ハッシュ) / varchar, not null"}
+  display_name {label: "表示名 / varchar, null"}
+  bio {label: "自己紹介 / varchar, null"}
+  location {label: "場所 / varchar, null"}
+  website {label: "Webサイト / varchar, null"}
+  birth_date {label: "生年月日 / date, null"}
+  profile_image_url {label: "ヘッダー画像URL / varchar, null"}
+  avatar_image_url {label: "アイコン画像URL / varchar, null"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[tweets]
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users), on delete cascade"}
-  content {label: "varchar(140), not null"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[tweets] {label: "ツイート"}
+  *id {label: "ID / bigint, not null"}
+  user_id {label: "投稿者ID / bigint, not null, FK(users), on delete cascade"}
+  content {label: "本文 / varchar(140), not null"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[likes]
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users), uniq(user_id, tweet_id), on delete cascade"}
-  tweet_id {label: "bigint, not null, FK(tweets), uniq(user_id, tweet_id), on delete cascade"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[likes] {label: "いいね"}
+  *id {label: "ID / bigint, not null"}
+  user_id {label: "ユーザーID / bigint, not null, FK(users), uniq(user_id, tweet_id), on delete cascade"}
+  tweet_id {label: "ツイートID / bigint, not null, FK(tweets), uniq(user_id, tweet_id), on delete cascade"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[retweets]
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users), uniq(user_id, tweet_id), on delete cascade"}
-  tweet_id {label: "bigint, not null, FK(tweets), uniq(user_id, tweet_id), on delete cascade"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[retweets] {label: "リツイート"}
+  *id {label: "ID / bigint, not null"}
+  user_id {label: "ユーザーID / bigint, not null, FK(users), uniq(user_id, tweet_id), on delete cascade"}
+  tweet_id {label: "ツイートID / bigint, not null, FK(tweets), uniq(user_id, tweet_id), on delete cascade"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[bookmarks]
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users), uniq(user_id, tweet_id), on delete cascade"}
-  tweet_id {label: "bigint, not null, FK(tweets), uniq(user_id, tweet_id), on delete cascade"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[bookmarks] {label: "ブックマーク"}
+  *id {label: "ID / bigint, not null"}
+  user_id {label: "ユーザーID / bigint, not null, FK(users), uniq(user_id, tweet_id), on delete cascade"}
+  tweet_id {label: "ツイートID / bigint, not null, FK(tweets), uniq(user_id, tweet_id), on delete cascade"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[follows]
-  *id {label: "bigint, not null"}
-  follower_id {label: "bigint, not null, FK(users), uniq(follower_id, followee_id), on delete cascade"}
-  followee_id {label: "bigint, not null, FK(users), uniq(follower_id, followee_id), on delete cascade"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[follows] {label: "フォロー"}
+  *id {label: "ID / bigint, not null"}
+  follower_id {label: "フォローする側のユーザーID / bigint, not null, FK(users), uniq(follower_id, followee_id), on delete cascade"}
+  followee_id {label: "フォローされる側のユーザーID / bigint, not null, FK(users), uniq(follower_id, followee_id), on delete cascade"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[direct_messages]
-  *id {label: "bigint, not null"}
-  sender_id {label: "bigint, not null, FK(users), on delete cascade"}
-  receiver_id {label: "bigint, not null, FK(users), on delete cascade"}
-  content {label: "text, not null"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[direct_messages] {label: "ダイレクトメッセージ"}
+  *id {label: "ID / bigint, not null"}
+  sender_id {label: "送信者ID / bigint, not null, FK(users), on delete cascade"}
+  receiver_id {label: "受信者ID / bigint, not null, FK(users), on delete cascade"}
+  content {label: "本文 / text, not null"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
-[notifications]
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users), on delete cascade"}
-  like_id {label: "bigint, null, uniq, FK(likes), on delete cascade"}
-  follow_id {label: "bigint, null, uniq, FK(follows), on delete cascade"}
-  read_at {label: "datetime, null"}
-  created_at {label: "datetime, not null"}
-  updated_at {label: "datetime, not null"}
+[notifications] {label: "通知"}
+  *id {label: "ID / bigint, not null"}
+  user_id {label: "通知先ユーザーID / bigint, not null, FK(users), on delete cascade"}
+  like_id {label: "いいねID / bigint, null, uniq, FK(likes), on delete cascade"}
+  follow_id {label: "フォローID / bigint, null, uniq, FK(follows), on delete cascade"}
+  read_at {label: "既読日時 / datetime, null"}
+  created_at {label: "作成日時 / datetime, not null"}
+  updated_at {label: "更新日時 / datetime, not null"}
 
 # 個人情報(email / phone_number)の保存方法
 #   *_ciphertext : AES-GCMで暗号化した値。メール送信・SMS送信時に復号して使う
