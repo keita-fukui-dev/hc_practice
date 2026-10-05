@@ -2,9 +2,11 @@ title {label: "Twitter ER Diagram"}
 
 [users]
   *id {label: "bigint, not null"}
-  email {label: "varchar, null, uniq, check(email is not null or phone_number is not null)"}
+  email_ciphertext {label: "varchar, null"}
+  email_bidx {label: "varchar, null, uniq, check(email_bidx is not null or phone_number_bidx is not null)"}
   user_name {label: "varchar, not null, uniq"}
-  phone_number {label: "varchar, null, uniq, check(email is not null or phone_number is not null)"}
+  phone_number_ciphertext {label: "varchar, null"}
+  phone_number_bidx {label: "varchar, null, uniq, check(email_bidx is not null or phone_number_bidx is not null)"}
   password_digest {label: "varchar, not null"}
   display_name {label: "varchar, null"}
   bio {label: "varchar, null"}
@@ -67,6 +69,12 @@ title {label: "Twitter ER Diagram"}
   read_at {label: "datetime, null"}
   created_at {label: "datetime, not null"}
   updated_at {label: "datetime, not null"}
+
+# 個人情報(email / phone_number)の保存方法
+#   *_ciphertext : AES-GCMで暗号化した値。メール送信・SMS送信時に復号して使う
+#   *_bidx       : 正規化した値をHMAC-SHA256(鍵はDB外で管理)したblind index。
+#                  ログイン時の検索(WHERE email_bidx = ?)と重複チェック(uniq)に使う
+#   password_digest : bcryptでソルト付きハッシュ化(照合のみで復号不要のため)
 
 # 削除時の扱い
 # 論理削除カラム(deleted_at)を持たず物理削除のため、親レコード削除時に子レコードが
